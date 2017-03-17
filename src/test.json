@@ -1,0 +1,52 @@
+{
+	"data": {
+		"questions": [
+			{
+				"question": "How do you find this questioner? ",
+				"id": 0,
+				"answerOptions": [
+					{
+						"id": 0,
+						"text": "bad"
+					},
+					{
+						"id": 1,
+						"text": "nice"
+					},
+					{
+						"id": 2,
+						"text": "ugly"
+					},
+					{
+						"id": 3,
+						"text": "not so good"
+					}
+				],
+				"rightAnswerId": 1
+			},
+			{
+				"question": "And now serious... ",
+				"id": 1,
+				"answerOptions": [
+					{
+						"id": 0,
+						"text": "bad"
+					},
+					{
+						"id": 1,
+						"text": "nice"
+					},
+					{
+						"id": 2,
+						"text": "ugly"
+					},
+					{
+						"id": 3,
+						"text": "not so good"
+					}
+				],
+				"rightAnswerId": 1
+			}
+		]
+	}
+}
