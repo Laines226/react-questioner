@@ -19,8 +19,10 @@ const Question = (props) => {
         }
     }
     return (
-        <button key={option.id} onClick={() => handleClick(option.id)} ><input value={option.text} ref={(input) => option.text = input} /></button>
-    )
+        <div> question </div>
+        )
+    //        <button key={option.id} onClick={() => handleClick(option.id)} ><input value={option.text} ref={(input) => option.text = input} /></button>
+
 }
 
 Question.propTypes = {

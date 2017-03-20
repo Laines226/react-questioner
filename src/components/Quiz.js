@@ -6,33 +6,21 @@ const Quiz = (props) => {
         console.log("handleClick [props.quiz.id], [answerId]", props.quiz.id, answerId);
         props.onAnswerClick(props.quiz.id, answerId);
     }
-    const getSymbol = (option) => {
-        console.log("getSymbol [option]", option);
-        if (!props.answer || option.id !== props.answer.answerId) {
-            return <span>&#9744;</span>;
-        }
-        else if (props.answer.right) {
-            return <span>&#9745;</span>;
-        }
-        else {
-            return <span>&#9746;</span>;
-        }
-    }
+
     return (
         <div>
-            <textarea value={props.quiz.question} readOnly={props.normalQuiz} /><br />
+            <textarea value={props.quiz.question} readOnly={props.normalQuiz} onChange={ (event) => {props.onQuestionChange(event)}}/><br />
             {
                 props.quiz.answerOptions.map((option) => {
-                    let input = "sdv";
-                    return  <div key={option.id} onClick={() => handleClick(option.id)} >{getSymbol(option)}  {option.text} </div>;
+                    return <div key={option.id} onClick={() => handleClick(option.id)} >{props.getSymbol(option.id)}  {props.normalQuiz ?<span>  {option.text}</span>:<span><input type="text" value={option.text}  onChange={ (event) => {props.onAnswerChange(event, option.id)}} /></span>} </div>;
                 })
             }
         </div>
     )
 }
 
-Quiz.defaultProps ={
-    normalQuiz : true
+Quiz.defaultProps = {
+    normalQuiz: true
 }
 
 Quiz.propTypes = {

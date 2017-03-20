@@ -1,0 +1,14 @@
+{
+	"quizzes": [
+		{
+			"title": "Test Quiz",
+			"file": "test.json",
+			"id" : 0
+		},
+				{
+			"title": "Test 2",
+			"file": "test2.json",
+			"id" : 1
+		}
+	]
+}

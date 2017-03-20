@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import all from '../../all.json';
+
 
 class App extends Component {
   constructor(props, context) {
@@ -8,7 +11,14 @@ class App extends Component {
   }
   render() {
     return (
-      <div>Homepage!</div>
+      <div>
+        {
+          all.quizzes.map((quiz) => {
+            return <Link to={`/quizzes/${quiz.file}`} key={quiz.id}>{quiz.title} </Link>
+          })
+        }
+        <Link to={`/create`}>create your own</Link>
+      </div>
     )
   }
 }

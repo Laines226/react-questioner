@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import data from '../test.json';
+// import data from v;
 import Quiz from './Quiz'
 
 class QuizApp extends Component {
@@ -9,6 +9,8 @@ class QuizApp extends Component {
       currentQuestionId: 0,
       answers: []
     }
+    this.data = require('../' + props.match.params.quizFile);
+    console.log("constructor QuizApp [this.data]", this.data);
   }
   handleAnswerClick = (questionId, answerId) => {
     if (this.state.answers[questionId] === undefined) {
@@ -16,7 +18,7 @@ class QuizApp extends Component {
       {
         "questionId": questionId,
         "answerId": answerId,
-        "right": (data.data.questions[questionId].rightAnswerId === answerId)
+        "right": (this.data.questions[questionId].rightAnswerId === answerId)
       }
 
       ]
@@ -27,30 +29,46 @@ class QuizApp extends Component {
   nextQuestion = () => {
     this.setState((prevState) => ({ currentQuestionId: prevState.currentQuestionId + 1 }));
   }
+  getSymbol = (index) => {
+    let answer = this.state.answers[this.state.currentQuestionId];
+    console.log("getSymbol [option]", index);
+    if (!answer || index !== answer.answerId) {
+      return <span>&#9744;</span>;
+    }
+    else if (answer.right) {
+      return <span>&#9745;</span>;
+    }
+    else {
+      return <span>&#9746;</span>;
+    }
+  }
   render() {
-    console.log("App [data], [answers]", data.data, this.state.answers);
-    const questions = data.data.questions;
+    console.log("App [data], [answers]", this.data, this.state.answers);
+    const questions = this.data.questions;
     let quiz = questions[this.state.currentQuestionId];
 
-    // let noRightAnswers = 0;
-    // if (this.state.answers.length > 0) {
-    //   noRightAnswers = this.state.answers.reduce((acc, val) => {
-    //     acc = val.right ? acc + 1 : acc;
-    //     return acc;
-    //   }, 0);
-    // }
-    // let score = <p>You answered {noRightAnswers} of {this.state.answers.length} questions right</p>
+    let noRightAnswers = 0;
+    if (this.state.answers.length > 0) {
+      noRightAnswers = this.state.answers.reduce((acc, val) => {
+        acc = val.right ? acc + 1 : acc;
+        return acc;
+      }, 0);
+    }
+    let score = <p>You answered {noRightAnswers} of {this.state.answers.length} questions right</p>
 
-    // {this.state.currentQuestionId === questions.length ? score :
-    //     }
+
     return (
       <div className="App">
         <div className="App-header">
         </div>
-        <div>
-          <p>{(this.state.currentQuestionId + 1)}/{questions.length}</p>
-          <Quiz quiz={quiz} answer={this.state.answers[this.state.currentQuestionId]} onAnswerClick={this.handleAnswerClick} />
-        </div>
+        {
+          this.state.currentQuestionId === questions.length ? score :
+            <div>
+              <p>{(this.state.currentQuestionId + 1)}/{questions.length}</p>
+              <Quiz quiz={quiz} getSymbol={this.getSymbol} onAnswerClick={this.handleAnswerClick} />
+
+            </div>
+        }
       </div>
     );
   }
