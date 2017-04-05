@@ -1,31 +1,26 @@
-import React from 'react'
+import React from 'react';
 
 const Question = (props) => {
     console.log("Quiz [props.answer]", props.answer);
     const handleClick = (answerId) => {
-        console.log("handleClick [props.quiz.id], [answerId]",props.quiz.id,  answerId);
-        props.onAnswerClick(props.quiz.id, answerId);
-    }
-    const getSymbol = (option) => {
-        console.log("getSymbol [option]" , option);
-        if (!props.answer || option.id !== props.answer.answerId) {
-            return <span>&#9744;</span>;
-        }
-        else if (props.answer.right) {
-            return <span>&#9745;</span>;
-        }
-        else {
-            return <span>&#9746;</span>;
-        }
-    }
+        props.onClick( answerId);
+    };
     return (
-        <div> question </div>
-        )
-    //        <button key={option.id} onClick={() => handleClick(option.id)} ><input value={option.text} ref={(input) => option.text = input} /></button>
+        props.normalQuiz?
+          <button className="btn btn-primary col-xs-12 col-sm-12 col-md-6 col-lg-6" onClick={() => handleClick(props.option.id)} >{props.option.text}</button>
+          :
+            <div className="input-group col-xs-12 col-sm-12 col-md-6 col-lg-6" key={props.option.id}>
 
-}
+              <span className="input-group-addon">
+                <input type="checkbox" onClick={() => handleClick(props.option.id)} />
+              </span>
+              <input type="text" className="form-control" value={props.option.text} onClick={() => handleClick(props.option.id)} onChange={(event) => {props.onAnswerChange(event, props.option.id);}} />
+            </div>
+
+        );
+};
 
 Question.propTypes = {
-}
+};
 
-export default Question
+export default Question;

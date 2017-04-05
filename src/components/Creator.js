@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Quiz from './Quiz'
+import Quiz from './Quiz';
 
 class Creator extends Component {
   constructor(props, context) {
@@ -27,28 +27,30 @@ class Creator extends Component {
         ],
         rightAnswerId: -1
       }
-    }
+
+    };
+
+    this.quizname = '';
     this.handleInputChange = this.handleInputChange.bind(this);
     this.submitQuestion = this.submitQuestion.bind(this);
   }
   handleInputChange = (event, id) => {
-    console.log("handleInputChange [input], [id]", event.target.value, id);
     let answerOptions = this.state.quiz.answerOptions;
     answerOptions[id].text = event.target.value;
     this.setState({ quiz: { ...this.state.quiz, answerOptions: answerOptions } });
+    event.preventDefault();
   }
   handleQuestionChange = (event) => {
-    console.log("handleQuestionChange [input], [id]", event.target.value);
     let question = this.state.question;
     question = event.target.value;
     this.setState({ quiz: { ...this.state.quiz, question: question } });
+    event.preventDefault();
   }
   handleAnswerClick = (questionId, answerId) => {
-    console.log("handleAnswerClick [questionId], [answerId]", questionId, answerId);
     this.setState({ quiz: { ...this.state.quiz, rightAnswerId: answerId } });
+    event.preventDefault();
   }
   getSymbol = (index) => {
-    console.log("getSymbol [option]", index);
     if (index !== this.state.quiz.rightAnswerId) {
       return <span>&#9744;</span>;
     }
@@ -56,17 +58,18 @@ class Creator extends Component {
       return <span>&#9745;</span>;
     }
   }
-  submitQuestion = (event) => {
-    console.log("submitQuestion");
+  submitQuestion = () => {
     let json = JSON.stringify(this.state.quiz);
-    console.log("submitQuestion", json);
-
+    console.warn("submit", json );
   }
   render() {
     return (
-      <div className="App">
-        <Quiz quiz={this.state.quiz} normalQuiz={false} getSymbol={this.getSymbol} onAnswerClick={this.handleAnswerClick} onAnswerChange={this.handleInputChange} onQuestionChange={this.handleQuestionChange} />
-        <button onClick={this.submitQuestion} >Submit</button>
+      <div className="App container">
+        <div>
+          Quiz Name: <input type="text" ref={input => this.quizname = input} />
+          <Quiz quiz={this.state.quiz} normalQuiz={false} getSymbol={this.getSymbol} onAnswerClick={this.handleAnswerClick} onAnswerChange={this.handleInputChange} onQuestionChange={this.handleQuestionChange} />
+          <button onClick={this.submitQuestion} >Submit</button>
+        </div>
       </div>
     );
   }
@@ -74,6 +77,6 @@ class Creator extends Component {
 
 Creator.defaultProps = {
 
-}
+};
 
 export default Creator;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import data from v;
-import Quiz from './Quiz'
+import Quiz from './Quiz';
 
 class QuizApp extends Component {
   constructor(props, context) {
@@ -8,8 +8,8 @@ class QuizApp extends Component {
     this.state = {
       currentQuestionId: 0,
       answers: []
-    }
-    this.data = require('../' + props.match.params.quizFile);
+    };
+    this.data = require('../../public/' + props.match.params.quizFile);
     console.log("constructor QuizApp [this.data]", this.data);
   }
   handleAnswerClick = (questionId, answerId) => {
@@ -21,7 +21,7 @@ class QuizApp extends Component {
         "right": (this.data.questions[questionId].rightAnswerId === answerId)
       }
 
-      ]
+      ];
       this.setState({ answers: answers });
     }
     setTimeout(this.nextQuestion, 1000);
@@ -54,13 +54,12 @@ class QuizApp extends Component {
         return acc;
       }, 0);
     }
-    let score = <p>You answered {noRightAnswers} of {this.state.answers.length} questions right</p>
+    let score = <p>You answered {noRightAnswers} of {this.state.answers.length} questions right</p>;
 
 
     return (
       <div className="App">
-        <div className="App-header">
-        </div>
+        <div className="App-header" />
         {
           this.state.currentQuestionId === questions.length ? score :
             <div>
